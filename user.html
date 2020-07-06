@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>IPTU - Prefeitura Municipal de Florianópolis</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+
+	<link rel="stylesheet" href="assets/fonts/feather-font/css/iconfont.css">
+  <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+ 
+	<link rel="stylesheet" href="assets/css/style.css">
+  <link rel="shortcut icon" href="assets/css/favicon.png" />
+</head>
+<body>
+	<div class="main-wrapper">
+
+		<div class="horizontal-menu">
+			<nav class="navbar top-navbar">
+				<div class="container">
+					<div class="navbar-content">
+						<a href="#" class="navbar-brand">
+							IPTU<span>PMF</span>
+						</a>
+						<form class="search-form">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i data-feather="search"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" id="navbarForm" placeholder="Faça uma busca...">
+							</div>
+						</form>
+						<ul class="navbar-nav">
+
+							<li class="nav-item dropdown nav-profile">
+								<a class="nav-link" href="#" id="profileDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									Sair
+								</a>
+							</li>
+						</ul>
+						<button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+							<i data-feather="menu"></i>					
+						</button>
+					</div>
+				</div>
+			</nav>
+			<nav class="bottom-navbar">
+				<div class="container">
+					<ul class="nav page-navigation">
+						<li class="nav-item">
+							<a class="nav-link" href="user.html">
+								<i class="link-icon" data-feather="box"></i>
+								<span class="menu-title">Painel</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="link-icon" data-feather="mail"></i>
+								<span class="menu-title">Outros serviços</span>
+							</a>
+							<div class="submenu">
+								<ul class="submenu-item">
+									<li class="nav-item"><a class="nav-link" href="#">Alvarás, autorizações e licenças</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Cadastroz e alterações</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Análises</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Outros impostos e taxas</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Habite-se</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Assistência Social</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Obras e urbanismo</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Melhoria e manutenção</a></li>
+									<li class="nav-item"><a class="nav-link" href="#">Comércio e serviços</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a href="https://www.nobleui.com/html/documentation/docs.html" target="_blank" class="nav-link">
+								<i class="link-icon" data-feather="hash"></i>
+								<span class="menu-title">Perguntas frequentes</span></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<!-- partial -->
+	
+		<div class="page-wrapper">
+
+
+			<div class="page-content">
+        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+          <div>
+            <h4 class="mb-3 mb-md-0">Consulta de débito e emissão de boleto</h4>
+          </div>
+          <div class="d-flex align-items-center flex-wrap text-nowrap">
+            <button type="button" class="btn btn-primary btn-icon-text mr-2 d-none d-md-block">
+              <i class="btn-icon-prepend" data-feather="upload"></i>
+              Exportar
+            </button>
+            <button type="button" class="btn btn-warning btn-icon-text mr-2 mb-2 mb-md-0">
+              <i class="btn-icon-prepend" data-feather="printer"></i>
+              Imprimir
+            </button>
+            <button type="button" class="btn btn-dark btn-icon-text mb-2 mb-md-0">
+              <i class="btn-icon-prepend" data-feather="download-cloud"></i>
+              Baixar PDF
+            </button>
+          </div>
+        </div>
+
+				<div class="row">
+					<div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-title">parcelas do iptu</h6>
+                <div class="table-responsive">
+                  <table id="dataTableExample" class="table">
+                    <thead>
+                      <tr>
+                      	<th></th>
+                        <th>Insc. Imób.</th>
+                        <th>Situação</th>
+                        <th>Parcela</th>
+                        <th>Ano Exerc.</th>
+                        <th>Vencimento</th>
+                        <th>Valor Lançado</th>
+                        <th>Valor Atual</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-success">Paga</span></td>
+                        <td>1/12</td>
+                        <td>2020</td>
+                        <td>11/Jan/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td><div class="btn-group" role="group" style="text-align: right; opacity:.4;" disabled>
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div></td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-success">Paga</span></td>
+                        <td>2/12</td>
+                        <td>2020</td>
+                        <td>11/Fev/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td><div class="btn-group" role="group" style="text-align: right; opacity:.4;" disabled>
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div></td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-success">Paga</span></td>
+                        <td>3/12</td>
+                        <td>2020</td>
+                        <td>11/Mar/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td><div class="btn-group" role="group" style="text-align: right; opacity:.4;" disabled>
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div></td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-success">Paga</span></td>
+                        <td>4/12</td>
+                        <td>2020</td>
+                        <td>11/Abr/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td><div class="btn-group" role="group" style="text-align: right; opacity:.4;" disabled>
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div></td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>5/12</td>
+                        <td>2020</td>
+                        <td>11/Mai/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>6/12</td>
+                        <td>2020</td>
+                        <td>11/Jun/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>7/12</td>
+                        <td>2020</td>
+                        <td>11/Jul/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>8/12</td>
+                        <td>2020</td>
+                        <td>11/Ago/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>9/12</td>
+                        <td>2020</td>
+                        <td>11/Set/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>10/12</td>
+                        <td>2020</td>
+                        <td>11/Out/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>11/12</td>
+                        <td>2020</td>
+                        <td>11/Nov/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-primary">A vencer</span></td>
+                        <td>12/12</td>
+                        <td>2020</td>
+                        <td>11/Dez/2020</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>1/12</td>
+                        <td>2019</td>
+                        <td>11/Jan/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>2/12</td>
+                        <td>2019</td>
+                        <td>11/Fev/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>3/12</td>
+                        <td>2019</td>
+                        <td>11/Mar/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>4/12</td>
+                        <td>2019</td>
+                        <td>11/Abr/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>5/12</td>
+                        <td>2019</td>
+                        <td>11/Mai/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>6/12</td>
+                        <td>2019</td>
+                        <td>11/Jun/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$346,32</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>7/12</td>
+                        <td>2019</td>
+                        <td>11/Jul/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>8/12</td>
+                        <td>2019</td>
+                        <td>11/Ago/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>9/12</td>
+                        <td>2019</td>
+                        <td>11/Set/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>10/12</td>Pagar
+                        <td>2019</td>
+                        <td>11/Out/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>11/12</td>
+                        <td>2019</td>
+                        <td>11/Nov/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                      <tr>
+                      	<td>
+							<div class="form-check form-check-flat form-check-primary">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input">
+								</label>
+							</div>
+						</td>
+                        <td>#435357/20</td>
+                        <td><span class="badge badge-danger">Atrasada</span></td>
+                        <td>12/12</td>
+                        <td>2019</td>
+                        <td>11/Dez/2019</td>
+                        <td>R$320,00</td>
+                        <td>R$320,00</td>
+                        <td>
+                        <div class="btn-group" role="group" style="text-align: right;">
+						    <button id="btnGroupDropp" type="button" class="btn btn-outline-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Emitir Boleto
+						    </button>
+						    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropp">
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">Ver</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class=
+	                          	"">Imprimir</span></a>
+	                          <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Baixar PDF</span></a>
+	                        </div>
+						 </div>
+						</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+			<footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between">
+				<p class="text-muted text-center text-md-left"> ©2020 Prefeitura Municipal de Florianópolis. Todos os direitos reservados. </p>
+				<p class="text-muted text-center text-md-left mb-0 d-none d-md-block">Desenvolvido pela <a href="http://www.betha.com.br/" target="_blank">Betha Sistemas</a></p>
+			</footer>
+		
+		</div>
+	</div>
+
+	<script src="assets/vendors/core/core.js"></script>
+
+  <script src="assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="assets/vendors/jquery.flot/jquery.flot.js"></script>
+  <script src="assets/vendors/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="assets/vendors/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="assets/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+	<script src="assets/vendors/feather-icons/feather.min.js"></script>
+	<script src="assets/js/template.js"></script>
+
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/datepicker.js"></script>
+  <script src="assets/js/data-table.js"></script>
+
+</body>
+</html>    
